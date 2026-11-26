@@ -23,7 +23,6 @@
     "@date-fns/tz": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "date-fns": "^4.4.0",
     "drizzle-orm": "^0.45.4",
     "next": "16.4.6",
     "postgres": "^3.4.9",
