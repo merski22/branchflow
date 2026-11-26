@@ -1,4 +1,5 @@
 # branchflow
+
 Rental Operations Intelligence Platform
 
 BranchFlow is an operational intelligence layer for vehicle rental branches. It
@@ -57,19 +58,19 @@ CREATE DATABASE branchflow_test OWNER branchflow;
 
 ## Scripts
 
-| Command | What it does |
-|---|---|
-| `pnpm dev` | Start the development server |
-| `pnpm build` / `pnpm start` | Production build / server (no dev identity — see ADR-003) |
-| `pnpm typecheck` | TypeScript, strict |
-| `pnpm lint` | ESLint, including architecture boundary rules |
-| `pnpm test` | All Vitest tests (unit + database integration) |
-| `pnpm test:unit` | Domain unit tests only (no database needed) |
-| `pnpm test:integration` | Database integration tests (needs `TEST_DATABASE_URL`) |
-| `pnpm test:e2e` | Playwright end-to-end tests (needs a migrated, seeded `DATABASE_URL`) |
-| `pnpm db:generate` | Generate a SQL migration from schema changes |
-| `pnpm db:migrate` | Apply migrations |
-| `pnpm db:seed` | Reset and reseed deterministic synthetic data |
+| Command                     | What it does                                                          |
+| --------------------------- | --------------------------------------------------------------------- |
+| `pnpm dev`                  | Start the development server                                          |
+| `pnpm build` / `pnpm start` | Production build / server (no dev identity — see ADR-003)             |
+| `pnpm typecheck`            | TypeScript, strict                                                    |
+| `pnpm lint`                 | ESLint, including architecture boundary rules                         |
+| `pnpm test`                 | All Vitest tests (unit + database integration)                        |
+| `pnpm test:unit`            | Domain unit tests only (no database needed)                           |
+| `pnpm test:integration`     | Database integration tests (needs `TEST_DATABASE_URL`)                |
+| `pnpm test:e2e`             | Playwright end-to-end tests (needs a migrated, seeded `DATABASE_URL`) |
+| `pnpm db:generate`          | Generate a SQL migration from schema changes                          |
+| `pnpm db:migrate`           | Apply migrations                                                      |
+| `pnpm db:seed`              | Reset and reseed deterministic synthetic data                         |
 
 ## Repository layout
 
@@ -88,21 +89,21 @@ docs/           Product, discovery, architecture and decision records
 
 ## Documentation
 
-| File | Contents |
-|---|---|
-| [`CLAUDE.md`](CLAUDE.md) | Persistent engineering instructions |
-| [`docs/PRODUCT_VISION.md`](docs/PRODUCT_VISION.md) | Company and product direction |
-| [`docs/OPERATIONAL_DISCOVERY.md`](docs/OPERATIONAL_DISCOVERY.md) | Operational findings, with confidence levels |
-| [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md) | Unresolved questions and what they block |
-| [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) | Principles, functional and non-functional requirements |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Technical architecture |
-| [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md) | Database design |
-| [`docs/BUSINESS_RULES.md`](docs/BUSINESS_RULES.md) | Business rule registry |
-| [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) | Interface standards (provisional) |
-| [`docs/ROADMAP.md`](docs/ROADMAP.md) | Phases and milestones |
-| [`docs/DECISIONS.md`](docs/DECISIONS.md) | Architecture/product decision records |
-| [`docs/TESTING.md`](docs/TESTING.md) | Testing strategy and instructions |
-| [`docs/CHANGELOG.md`](docs/CHANGELOG.md) | Completed work |
+| File                                                             | Contents                                               |
+| ---------------------------------------------------------------- | ------------------------------------------------------ |
+| [`CLAUDE.md`](CLAUDE.md)                                         | Persistent engineering instructions                    |
+| [`docs/PRODUCT_VISION.md`](docs/PRODUCT_VISION.md)               | Company and product direction                          |
+| [`docs/OPERATIONAL_DISCOVERY.md`](docs/OPERATIONAL_DISCOVERY.md) | Operational findings, with confidence levels           |
+| [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md)               | Unresolved questions and what they block               |
+| [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md)                   | Principles, functional and non-functional requirements |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)                   | Technical architecture                                 |
+| [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md)                       | Database design                                        |
+| [`docs/BUSINESS_RULES.md`](docs/BUSINESS_RULES.md)               | Business rule registry                                 |
+| [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md)                 | Interface standards (provisional)                      |
+| [`docs/ROADMAP.md`](docs/ROADMAP.md)                             | Phases and milestones                                  |
+| [`docs/DECISIONS.md`](docs/DECISIONS.md)                         | Architecture/product decision records                  |
+| [`docs/TESTING.md`](docs/TESTING.md)                             | Testing strategy and instructions                      |
+| [`docs/CHANGELOG.md`](docs/CHANGELOG.md)                         | Completed work                                         |
 
 ## Data and privacy
 

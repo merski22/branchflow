@@ -4,7 +4,7 @@ BranchFlow is built one validated workflow at a time. Phases describe order of
 work, not dates. Nothing in a later phase is built before its predecessor
 demonstrates value.
 
-## Phase 0 — Product and engineering foundation · *in progress*
+## Phase 0 — Product and engineering foundation · _in progress_
 
 1. Repository and persistent documentation.
 2. Next.js application scaffold, strict TypeScript, lint boundaries, provisional design tokens.
@@ -18,7 +18,7 @@ demonstrates value.
 Exit: a fresh clone runs locally with four commands; CI green; isolation and
 seed-reproducibility tests pass.
 
-## Phase 1 — Contract Intelligence Engine · *direction approved, design pending*
+## Phase 1 — Contract Intelligence Engine · _direction approved, design pending_
 
 One shared engine over open rental contracts, with four lenses:
 
@@ -30,7 +30,7 @@ One shared engine over open rental contracts, with four lenses:
   with source and freshness. Value depends on Q-004.
 
 Before implementation: answer Q-001, Q-003, Q-005, Q-050–Q-053; co-design the
-workflow and interface; register rules as *proposed*. Establish the baseline
+workflow and interface; register rules as _proposed_. Establish the baseline
 review-time measurement (Q-053).
 
 ## Phase 2 — Branch Command Center

@@ -1,7 +1,7 @@
 # Design System
 
 **Status: provisional.** Branding, colour palette, typography and module layouts
-are *not* decided. They will be designed collaboratively, module by module. The
+are _not_ decided. They will be designed collaboratively, module by module. The
 current tokens are neutral placeholders chosen to be easy to replace.
 
 ## Direction (agreed)
@@ -24,17 +24,17 @@ through `@theme inline`. Components use semantic names only
 (`bg-background`, `text-muted-foreground`, `border-border`), never raw colours,
 so a palette change is a one-file edit.
 
-| Token | Role |
-|---|---|
-| `background` / `foreground` | Page surface and body text |
-| `surface` | Slightly raised areas (sidebar, table header) |
-| `muted` / `muted-foreground` | Secondary surfaces and text |
-| `border` | Hairlines and dividers |
-| `primary` / `primary-foreground` | The one emphasis colour (provisional: near-black) |
-| `ring` | Focus outline |
+| Token                                                                           | Role                                                                      |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `background` / `foreground`                                                     | Page surface and body text                                                |
+| `surface`                                                                       | Slightly raised areas (sidebar, table header)                             |
+| `muted` / `muted-foreground`                                                    | Secondary surfaces and text                                               |
+| `border`                                                                        | Hairlines and dividers                                                    |
+| `primary` / `primary-foreground`                                                | The one emphasis colour (provisional: near-black)                         |
+| `ring`                                                                          | Focus outline                                                             |
 | `status-ok`, `status-warn`, `status-danger`, `status-unknown` (+ `-foreground`) | Status signals. **Unknown has its own token** — it is never styled as OK. |
-| `synthetic` / `synthetic-foreground` | Synthetic-data indicator |
-| `radius` | Corner radius (small) |
+| `synthetic` / `synthetic-foreground`                                            | Synthetic-data indicator                                                  |
+| `radius`                                                                        | Corner radius (small)                                                     |
 
 Dark mode: follows the OS preference; tokens are redefined under
 `prefers-color-scheme: dark`.

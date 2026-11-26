@@ -30,14 +30,14 @@ seed), `tests/e2e/` (Playwright).
 
 ## Layer rules (enforced by ESLint `no-restricted-imports`)
 
-| Layer | May import | Must not import |
-|---|---|---|
-| `domain` | `domain`, small pure libraries (zod, date-fns) | `app`, `components`, `server`, `db`, `next`, `react` |
-| `synthetic` | `domain` | `app`, `components`, `server`, `next`, `react` |
-| `db` | drizzle, `domain` types | `app`, `components`, `server` |
-| `server` | `domain`, `db` | `app`, `components` |
-| `components` | `domain` types, `components` | `server`, `db` |
-| `app` | everything above | — |
+| Layer        | May import                                     | Must not import                                      |
+| ------------ | ---------------------------------------------- | ---------------------------------------------------- |
+| `domain`     | `domain`, small pure libraries (zod, date-fns) | `app`, `components`, `server`, `db`, `next`, `react` |
+| `synthetic`  | `domain`                                       | `app`, `components`, `server`, `next`, `react`       |
+| `db`         | drizzle, `domain` types                        | `app`, `components`, `server`                        |
+| `server`     | `domain`, `db`                                 | `app`, `components`                                  |
+| `components` | `domain` types, `components`                   | `server`, `db`                                       |
+| `app`        | everything above                               | —                                                    |
 
 ## Request flow and authorization
 
@@ -98,12 +98,12 @@ Next.js Cache Components are enabled (ADR-006). Tenant data is not cached.
 
 Validated with Zod in `src/server/env.ts`. See `.env.example`.
 
-| Variable | Purpose |
-|---|---|
-| `DATABASE_URL` | Postgres connection string |
-| `AUTH_MODE` | `dev` (only mode in Phase 0) or `none` |
-| `DEV_AUTH_DEFAULT_USER_EMAIL` | Synthetic user used when no dev identity is chosen |
-| `TEST_DATABASE_URL` | Database for integration tests (destroyed/recreated) |
+| Variable                      | Purpose                                              |
+| ----------------------------- | ---------------------------------------------------- |
+| `DATABASE_URL`                | Postgres connection string                           |
+| `AUTH_MODE`                   | `dev` (only mode in Phase 0) or `none`               |
+| `DEV_AUTH_DEFAULT_USER_EMAIL` | Synthetic user used when no dev identity is chosen   |
+| `TEST_DATABASE_URL`           | Database for integration tests (destroyed/recreated) |
 
 ## Deployment
 

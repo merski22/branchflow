@@ -31,21 +31,25 @@ Source of truth: `src/db/schema/*.ts` (Drizzle). Migrations: `src/db/migrations/
 ## Phase 0 entities (implemented)
 
 ### organizations
+
 A customer (rental company or operator).
 `id`, `slug` (unique), `name`, `is_synthetic`, `created_at`, `updated_at`.
 
 ### branches
+
 A rental location belonging to one organization.
 `id`, `organization_id` → organizations, `slug` (unique per organization),
 `name`, `time_zone` (IANA, validated by check in application layer),
 `is_synthetic`, `created_at`, `updated_at`.
 
 ### users
+
 A person who can sign in. `id`, `email` (unique, stored lower-case),
 `display_name`, `is_synthetic`, `created_at`, `updated_at`.
 No passwords are stored in Phase 0 (ADR-003).
 
 ### branch_memberships
+
 Grants a user a role at a branch.
 `id`, `user_id`, `branch_id`, `role` (enum `branch_role`), `created_at`.
 Unique `(user_id, branch_id)`.
@@ -55,6 +59,7 @@ Unique `(user_id, branch_id)`.
 Permissions per role are defined in code (ADR-007, `src/domain/auth/permissions.ts`).
 
 ### data_imports
+
 One ingestion of data into a branch: the provenance anchor for imported rows.
 `id`, `organization_id`, `branch_id`, `source_kind` (enum `import_source_kind`:
 `synthetic_seed` | `file_upload`), `source_label`, `file_name` (nullable),
@@ -65,6 +70,7 @@ One ingestion of data into a branch: the provenance anchor for imported rows.
 `created_by_user_id` (nullable for system), `started_at`, `completed_at`.
 
 ### audit_events
+
 Append-only record of security- and data-relevant events.
 `id`, `organization_id` (nullable for system-level events), `branch_id`
 (nullable), `actor_kind` (enum: `user` | `system`), `actor_user_id` (nullable),
@@ -77,13 +83,13 @@ test suite and the seed reset).
 
 Created with the module that needs them, after design approval:
 
-| Entity | First needed by |
-|---|---|
-| rental_contracts, contract_review_states, follow_ups | Contract Intelligence Engine (Phase 1) |
-| insurance_authorizations (observed snapshots, never "live") | Insurance Authorization Monitor |
-| callback_records, customer_contact_events | Callback / CARP Intelligence |
-| import_row_results, import column mappings | Phase 4 ingestion |
-| vehicle_classes, vehicles, reservations, expected_returns, vehicle_holds, vehicle_transfers | Availability Guard |
-| operational_exceptions | Command Center |
-| daily_operational_snapshots, report_definitions | EOD Intelligence |
-| organization-level roles, regions | Regional Operations |
+| Entity                                                                                      | First needed by                        |
+| ------------------------------------------------------------------------------------------- | -------------------------------------- |
+| rental_contracts, contract_review_states, follow_ups                                        | Contract Intelligence Engine (Phase 1) |
+| insurance_authorizations (observed snapshots, never "live")                                 | Insurance Authorization Monitor        |
+| callback_records, customer_contact_events                                                   | Callback / CARP Intelligence           |
+| import_row_results, import column mappings                                                  | Phase 4 ingestion                      |
+| vehicle_classes, vehicles, reservations, expected_returns, vehicle_holds, vehicle_transfers | Availability Guard                     |
+| operational_exceptions                                                                      | Command Center                         |
+| daily_operational_snapshots, report_definitions                                             | EOD Intelligence                       |
+| organization-level roles, regions                                                           | Regional Operations                    |

@@ -6,12 +6,12 @@ fails if the two disagree on rule ids or statuses.
 
 ## Validation statuses
 
-| Status | Meaning |
-|---|---|
-| `confirmed` | Matches a confirmed operational finding and founder sign-off. |
-| `proposed` | Reasonable default we believe is correct; not validated with managers. |
-| `experimental` | Being trialled; may be removed. |
-| `requires_discovery` | Placeholder for a rule we know is needed but cannot define yet. |
+| Status               | Meaning                                                                |
+| -------------------- | ---------------------------------------------------------------------- |
+| `confirmed`          | Matches a confirmed operational finding and founder sign-off.          |
+| `proposed`           | Reasonable default we believe is correct; not validated with managers. |
+| `experimental`       | Being trialled; may be removed.                                        |
+| `requires_discovery` | Placeholder for a rule we know is needed but cannot define yet.        |
 
 A rule's status is never promoted without recording the evidence in
 OPERATIONAL_DISCOVERY.md and noting the change in CHANGELOG.md.
@@ -34,6 +34,7 @@ OPERATIONAL_DISCOVERY.md and noting the change in CHANGELOG.md.
 ---
 
 ### FRESH-001 — Data freshness classification
+
 - **Status:** proposed
 - **Module:** shared
 - **Purpose:** Tell a manager how current a piece of information is, so stale
@@ -53,6 +54,7 @@ OPERATIONAL_DISCOVERY.md and noting the change in CHANGELOG.md.
 - **Tests:** `src/domain/shared/freshness.test.ts`.
 
 ### TIME-001 — Branch business date
+
 - **Status:** proposed
 - **Module:** shared
 - **Purpose:** Decide which operational day an instant belongs to at a branch,
@@ -69,6 +71,7 @@ OPERATIONAL_DISCOVERY.md and noting the change in CHANGELOG.md.
   America/Toronto).
 
 ### AUTH-001 — Branch access
+
 - **Status:** proposed
 - **Module:** shared / security
 - **Purpose:** Decide whether a user may perform an action at a branch.
