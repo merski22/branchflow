@@ -4,7 +4,7 @@ BranchFlow is built one validated workflow at a time. Phases describe order of
 work, not dates. Nothing in a later phase is built before its predecessor
 demonstrates value.
 
-## Phase 0 — Product and engineering foundation · _in progress_
+## Phase 0 — Product and engineering foundation · _complete, awaiting founder review_
 
 1. Repository and persistent documentation.
 2. Next.js application scaffold, strict TypeScript, lint boundaries, provisional design tokens.
@@ -59,3 +59,21 @@ duplicate detection, previews, idempotency and history; privacy assessment
 Multi-tenant deployment, onboarding, subscriptions, **Regional Operations**
 (multi-branch visibility, regional availability, cross-branch transfers,
 benchmarking), support, enterprise integration interfaces.
+
+## Known limitations after Phase 0
+
+- **No production authentication.** Only the development identity exists; a
+  production build shows "Sign-in is not available" by design (ADR-003).
+- **Denied pages return HTTP 200** with the not-found page, because authorization
+  runs inside a streamed Suspense boundary (see ARCHITECTURE.md). Content is
+  correct and leaks nothing; the status code is not 404.
+- **No operational data or modules.** The data-sources table shows only the
+  synthetic seed itself (zero rows). This is intentional.
+- **No data import pipeline**, so imports, column mapping and failed-import
+  handling are untested (Phase 4).
+- **Branch time zones are not validated at write time** — there is no
+  branch-creation path yet.
+- **Role/permission matrix and FRESH-001 thresholds are proposals** pending
+  discovery (Q-080).
+- **E2E runs against `next dev`**, not a production build (ADR-011).
+- **Design is provisional:** neutral tokens and a working shell only.

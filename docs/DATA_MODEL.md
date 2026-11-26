@@ -39,12 +39,14 @@ A customer (rental company or operator).
 
 A rental location belonging to one organization.
 `id`, `organization_id` → organizations, `slug` (unique per organization),
-`name`, `time_zone` (IANA, validated by check in application layer),
-`is_synthetic`, `created_at`, `updated_at`.
+`name`, `time_zone` (IANA name; not validated by the database — validate with
+`isValidTimeZone` when a creation path is added), `is_synthetic`, `created_at`,
+`updated_at`. Also unique on `(id, organization_id)` as the target of the
+composite tenant foreign keys below.
 
 ### users
 
-A person who can sign in. `id`, `email` (unique, stored lower-case),
+A person who can sign in. `id`, `email` (unique case-insensitively via an index on `lower(email)`),
 `display_name`, `is_synthetic`, `created_at`, `updated_at`.
 No passwords are stored in Phase 0 (ADR-003).
 
@@ -68,16 +70,23 @@ One ingestion of data into a branch: the provenance anchor for imported rows.
 `data_as_of` (nullable: the time the source data describes; **unknown if null**),
 `row_count`, `accepted_row_count`, `rejected_row_count` (nullable until known),
 `created_by_user_id` (nullable for system), `started_at`, `completed_at`.
+`(branch_id, organization_id)` is a composite foreign key to branches, so an
+import can never claim an organization that does not own its branch.
 
 ### audit_events
 
 Append-only record of security- and data-relevant events.
 `id`, `organization_id` (nullable for system-level events), `branch_id`
-(nullable), `actor_kind` (enum: `user` | `system`), `actor_user_id` (nullable),
+(nullable; requires `organization_id` — check constraint), `actor_kind` (enum:
+`user` | `system`), `actor_user_id` (nullable; `ON DELETE RESTRICT`, so users
+with audit history cannot be hard-deleted),
 `action` (dotted string, e.g. `synthetic_seed.applied`), `entity_type`,
 `entity_id`, `metadata` (jsonb; **no customer personal data**), `occurred_at`.
-A database trigger rejects `UPDATE` and `DELETE` (except `TRUNCATE` used by the
-test suite and the seed reset).
+`(branch_id, organization_id)` is a composite foreign key to branches.
+A database trigger rejects `UPDATE` and `DELETE`. `TRUNCATE` is not blocked; it
+is used only by the test suite and the synthetic seed reset.
+
+Action names in use: `synthetic_seed.applied`, `dev_identity.switched`.
 
 ## Planned entities (not implemented)
 

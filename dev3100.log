@@ -1,0 +1,19 @@
+▲ Next.js 16.4.6 (Turbopack)
+- Local:         http://localhost:3100
+- Network:       http://192.0.2.2:3100
+- Environments: .env
+✓ Ready in 326ms
+✓ Running next.config.ts took 40ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+ GET /dev/identity 200 in 780ms (next.js: 290ms, application-code: 490ms)
+ GET / 200 in 53ms (next.js: 8ms, application-code: 46ms)
+ POST /dev/identity 200 in 97ms (next.js: 1.1ms, application-code: 96ms)
+  └─ ƒ switchDevIdentity({}) in 8ms src/app/dev/identity/actions.ts
+ GET / 200 in 81ms (next.js: 1.5ms, application-code: 80ms)
+ GET /dev/identity 200 in 79ms (next.js: 1.3ms, application-code: 78ms)
+ GET / 200 in 37ms (next.js: 1.2ms, application-code: 36ms)
+ POST /dev/identity 200 in 92ms (next.js: 2.0ms, application-code: 90ms)
+  └─ ƒ switchDevIdentity({}) in 6ms src/app/dev/identity/actions.ts
+[?25h

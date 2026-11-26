@@ -24,40 +24,56 @@ and PostgreSQL.
  PostgreSQL 16
 ```
 
-Supporting folders: `src/synthetic/` (deterministic generators and seed
-scenarios), `src/ingestion/` (adapter interfaces; Phase 4), `scripts/` (migrate,
-seed), `tests/e2e/` (Playwright).
+Supporting folders: `src/synthetic/` (deterministic generators and scenarios),
+`src/lib/` (UI utilities), `scripts/` (migrate, seed entry points),
+`tests/integration/` (test database harness), `tests/e2e/` (Playwright).
 
 ## Layer rules (enforced by ESLint `no-restricted-imports`)
 
-| Layer        | May import                                     | Must not import                                      |
-| ------------ | ---------------------------------------------- | ---------------------------------------------------- |
-| `domain`     | `domain`, small pure libraries (zod, date-fns) | `app`, `components`, `server`, `db`, `next`, `react` |
-| `synthetic`  | `domain`                                       | `app`, `components`, `server`, `next`, `react`       |
-| `db`         | drizzle, `domain` types                        | `app`, `components`, `server`                        |
-| `server`     | `domain`, `db`                                 | `app`, `components`                                  |
-| `components` | `domain` types, `components`                   | `server`, `db`                                       |
-| `app`        | everything above                               | —                                                    |
+| Layer        | May import                                         | Must not import                                                     |
+| ------------ | -------------------------------------------------- | ------------------------------------------------------------------- |
+| `domain`     | `domain`, small pure libraries (zod, @date-fns/tz) | `app`, `components`, `server`, `db`, `next`, `react`, `drizzle-orm` |
+| `synthetic`  | `domain`                                           | `app`, `components`, `server`, `next`, `react`, `drizzle-orm`       |
+| `db`         | drizzle, `domain`, `synthetic` (seed writer)       | `app`, `components`, `server`                                       |
+| `server`     | `domain`, `db`                                     | `app`, `components`                                                 |
+| `components` | `domain`, `lib`, other `components`                | `server`, `db`, `app`                                               |
+| `lib`        | small UI utilities (`cn`)                          | —                                                                   |
+| `app`        | everything above                                   | —                                                                   |
 
 ## Request flow and authorization
 
-1. Identity: `getSessionUser()` (`src/server/auth/session.ts`). In Phase 0 the
-   only identity source is the development identity (`AUTH_MODE=dev`, ADR-003),
-   which throws if `NODE_ENV=production`.
-2. Authorization: `authorizeBranchAccess(db, userId, orgSlug, branchSlug, permission)`
+1. Identity: `getSession()` (`src/server/auth/session.ts`, logic in
+   `identity.ts`) returns an explicit state: `signed_in`, `signed_out` or
+   `auth_not_configured`. In Phase 0 the only identity source is the development
+   identity (`AUTH_MODE=dev`, ADR-003). It reports `auth_not_configured` when
+   `NODE_ENV=production` and only ever resolves users flagged synthetic. The
+   chosen identity is an httpOnly cookie holding a user id, set by the
+   `/dev/identity` server action, which re-validates everything.
+2. Authorization: `authorizeBranchAccess(db, { userId, orgSlug, branchSlug, permission })`
    loads the branch **only through a join on the user's membership** and checks
-   the role's permissions (`src/domain/auth/permissions.ts`). Missing branch,
-   missing membership and missing permission all produce `NotFound`
-   (NFR-012).
-3. Branch-scoped repositories accept an `AuthorizedBranch` value (only obtainable
-   from step 2) rather than raw ids, so unscoped queries are hard to write by
-   accident.
-4. Pages render request-dependent content inside `<Suspense>` (ADR-006).
+   the role's permissions (`src/domain/auth/permissions.ts`). A missing branch,
+   missing membership, unknown role or missing permission all return `null`;
+   `requireBranchAccess()` turns that into `notFound()` (NFR-012).
+3. Branch-scoped repositories accept an `AuthorizedBranch` value (a branded type
+   only produced by step 2) rather than raw ids, so unscoped queries are hard to
+   write by accident. Repositories that need a specific permission re-check it.
+4. Every page authorizes for its own permission; the branch layout's check only
+   renders the frame (layouts are not re-rendered on client navigation).
+5. Pages render request-dependent content inside `<Suspense>` (ADR-006).
+
+**Known limitation — HTTP status of denied pages.** Because authorization runs
+inside a streamed `<Suspense>` boundary, the response status (200) is sent before
+`notFound()` runs. Users see the not-found page and denied/nonexistent branches
+are indistinguishable (the security property), but the HTTP status is not 404.
+A request-level check in `proxy.ts` can fix this when real authentication lands.
 
 ## Time
 
 - Stored as `timestamptz` (UTC instants).
-- Each branch has an IANA `time_zone` (validated). Demo: `America/Toronto`.
+- Each branch has an IANA `time_zone`. Demo: `America/Toronto` (and
+  `America/Winnipeg` for a second organization). Time functions reject invalid
+  zones rather than falling back to UTC. There is no branch-creation path yet;
+  when one is added it must validate with `isValidTimeZone`.
 - `src/domain/shared/time.ts` converts instants to branch-local date/time and
   defines the **business date** of an instant in a branch. Business-day
   boundaries are local midnight; DST transitions are tested.
@@ -71,9 +87,9 @@ rounded.
 ## Provenance and unknowns (ADR-004)
 
 - Domain: `Observed<T>` = known value or explicit unknown with a reason.
-- Database: nullable columns mean "unknown"; provenance columns
-  (`source_kind`, `data_import_id`, `observed_at`, `recorded_at`) on operational
-  tables.
+- Database: nullable columns mean "unknown". Operational tables (Phase 1+) will
+  carry provenance columns (`source_kind`, `data_import_id`, `observed_at`,
+  `recorded_at`); in Phase 0 the provenance anchor is `data_imports`.
 - Freshness is computed by rule `FRESH-001`, never stored.
 
 ## Business rules
@@ -85,7 +101,7 @@ assumptions, missing-data behaviour, thresholds, status). A test keeps
 
 ## Integration (future)
 
-`src/ingestion/` will define a `SourceAdapter` interface: parse → validate (Zod)
+A future `src/ingestion/` will define a `SourceAdapter` interface: parse → validate (Zod)
 → preview → commit as a `data_imports` record with row-level results. CSV and
 Excel adapters come first (Phase 4). No adapter for any proprietary system exists
 or is assumed (P-1, ADR-005).

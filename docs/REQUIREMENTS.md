@@ -1,7 +1,7 @@
 # Requirements
 
 Requirement ids: `NFR-###` non-functional, `FR-<module>-###` functional.
-Status: **Approved** (founder-approved), **Proposed**, **Requires discovery**.
+Status: **Approved** (founder-approved), **Implemented** (approved and built), **Proposed**, **Requires discovery**.
 
 ## Product principles (binding on every requirement)
 
@@ -59,14 +59,14 @@ Status: **Approved** (founder-approved), **Proposed**, **Requires discovery**.
 
 ### Phase 0 — Foundation
 
-| ID       | Requirement                                                                                                     | Status   |
-| -------- | --------------------------------------------------------------------------------------------------------------- | -------- |
-| FR-F-001 | A user sees only branches they are a member of.                                                                 | Approved |
-| FR-F-002 | Branch pages show the branch name, its time zone, and the current local date and time in that zone.             | Approved |
-| FR-F-003 | Branch pages list the data sources (imports) for the branch with their as-of time and freshness.                | Approved |
-| FR-F-004 | Branch pages show a persistent indicator when the branch's data is synthetic.                                   | Approved |
-| FR-F-005 | Authorized users can view the branch's audit log.                                                               | Approved |
-| FR-F-006 | In development only, a developer can switch between synthetic identities to exercise permissions and isolation. | Approved |
+| ID       | Requirement                                                                                                     | Status      |
+| -------- | --------------------------------------------------------------------------------------------------------------- | ----------- |
+| FR-F-001 | A user sees only branches they are a member of.                                                                 | Implemented |
+| FR-F-002 | Branch pages show the branch name, its time zone, and the current local date and time in that zone.             | Implemented |
+| FR-F-003 | Branch pages list the data sources (imports) for the branch with their as-of time and freshness.                | Implemented |
+| FR-F-004 | Branch pages show a persistent indicator when the branch's data is synthetic.                                   | Implemented |
+| FR-F-005 | Authorized users can view the branch's audit log.                                                               | Implemented |
+| FR-F-006 | In development only, a developer can switch between synthetic identities to exercise permissions and isolation. | Implemented |
 
 ### Contract Intelligence Engine (Phase 1 — direction approved, design pending)
 

@@ -110,3 +110,22 @@ branches return 404.
 **Consequences.** No hidden "current branch" state to drift; slugs are unique
 per organization.
 **Status.** Accepted, 2026-11-26.
+
+## ADR-010 — Pin postgres.js to 3.4.x
+
+**Context.** postgres.js 4.0 was released in late October 2026, weeks before Phase 0.
+Drizzle's peer range is `>=3`, but its adapter has years of use with 3.x.
+**Decision.** Pin `postgres@3.4.9`. Re-evaluate 4.x once it has matured and
+Drizzle documents support.
+**Consequences.** Lower supply-chain and compatibility risk; a deliberate upgrade later.
+**Status.** Accepted, 2026-11-26.
+
+## ADR-011 — End-to-end tests run against the development server
+
+**Context.** The development identity is disabled in production builds (ADR-003),
+so a production build has no identity source until real authentication exists.
+**Decision.** Playwright starts `next dev` (port 3100) and reseeds `DATABASE_URL`
+with the deterministic scenario. CI separately verifies `pnpm build`.
+**Consequences.** E2E does not exercise production rendering. Revisit when real
+authentication exists; then run E2E against `next start`.
+**Status.** Accepted, 2026-11-26.

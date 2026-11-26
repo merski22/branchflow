@@ -51,9 +51,18 @@ times, counts and money.
 Radix where behaviour is needed, `class-variance-authority` for variants,
 `cn()` (`clsx` + `tailwind-merge`) for class merging.
 
-Current primitives: `Button`, `Badge`, `Table`.
+Current primitives: `Button`, `Badge` (tones: neutral, ok, warn, danger,
+unknown, synthetic), `Table`.
 BranchFlow composites (`src/components/`): `SyntheticDataBanner`,
-`FreshnessBadge`, `EmptyState`, `AppShell`.
+`FreshnessBadge` (label always paired with its basis, e.g. "2 min old"),
+`EmptyState`, `LoadingState`, `PageHeader`, `Section`, `BranchNav`.
+
+## Application shell (provisional)
+
+A 44px top bar (wordmark, identity indicator), then per branch: synthetic-data
+banner, a breadcrumb (organization / branch) and branch navigation, and a
+centred content column (max 72rem). This is a working frame, not a decided
+layout — module layouts will be designed together.
 
 ## Patterns
 

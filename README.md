@@ -42,8 +42,21 @@ pnpm dev
 ```
 
 Open <http://localhost:3000>. You are signed in as a **synthetic development
-identity**; switch identities at <http://localhost:3000/dev/identity> to see how
-branch access and isolation behave.
+identity** (Avery Manager). Switch identities at
+<http://localhost:3000/dev/identity> to see how branch access and isolation
+behave:
+
+| Identity          | What it demonstrates                                                             |
+| ----------------- | -------------------------------------------------------------------------------- |
+| Avery Manager     | Branch manager at Lakeshore and assistant manager at Harbourfront (multi-branch) |
+| Jordan Assistant  | Assistant manager at Lakeshore                                                   |
+| Sam Trainee       | Management trainee — no audit log access                                         |
+| Riley Manager     | Harbourfront only — Lakeshore is "not found"                                     |
+| Casey Manager     | A different organization (Riverside, Central time)                               |
+| Morgan Unassigned | No memberships — empty state                                                     |
+
+The development identity is **not authentication**. It is disabled in production
+builds (`pnpm build && pnpm start` shows "Sign-in is not available").
 
 ### Using your own Postgres instead of Docker
 
@@ -82,8 +95,12 @@ src/
   server/       Server-only: env, identity, authorization, repositories
   db/           Drizzle schema and SQL migrations
   synthetic/    Deterministic synthetic data generators
+  lib/          Small UI utilities
 scripts/        migrate / seed entry points
-tests/e2e/      Playwright tests
+tests/
+  integration/  Test-database harness (refuses non-"_test" databases)
+  e2e/          Playwright tests
+.github/        CI workflow
 docs/           Product, discovery, architecture and decision records
 ```
 
